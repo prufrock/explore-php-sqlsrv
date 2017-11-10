@@ -1,56 +1,32 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
+## Explore PHP SQL SRV
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+The purpose of this repo is to figure out the ins and outs of using the Microsoft's SQL Server with PHP.
 
-## About Laravel
+# Usage
+This repo uses Homestead so the first step is to get Virtual Box(it might work with other providers but I've never tried).
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
+Once you have Virtual Box you can install Homestead by simply running `composer install`.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+The next step is to run `vagrant up` but you may want to check `Homestead.yaml` to see if you agree with the configuration. Oh, while you're there you should add the hostname to you `/etc/hosts` file mapped to the ip address at the top of the file.
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb combination of simplicity, elegance, and innovation gives you a complete toolset required to build any application with which you are tasked.
+Now that you've got vagrant running you'll need to install the official Microsoft driver for PHP: https://github.com/Microsoft/msphpsql. If you plan to use PHP 7.1 I added an bash alias to `aliases` that can be run once the machine is booted to install the driver for PHP 7.1. It only works when run as root so you will need to do the following from the project directory:
 
-## Learning Laravel
+1. `$ vagrant ssh`
+1. `sudo su`
+1. `souce code/aliases`
+1. `install_sqlserver_php7.1`
 
-Laravel has the most extensive and thorough documentation and video tutorial library of any modern web application framework. The [Laravel documentation](https://laravel.com/docs) is in-depth and complete, making it a breeze to get started learning the framework.
+That should get you setup with the driver. If you don't have a SQL Server to connect to I recommend the docker container: https://docs.microsoft.com/en-us/sql/linux/quickstart-install-connect-docker.
 
-If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 1100 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library.
+When you want to connect to the a docker container from a Virtual Box be aware you will need to use the host only network. Vagrant usually assigns one of these to the virtual machine either as vboxnet0 or vboxnet1. On my machine the address is `192.168.10.1`. My .env file for the database looks like this:
 
-## Laravel Sponsors
+```text
+DB_CONNECTION=sqlsrv
+DB_HOST=192.168.10.1
+DB_PORT=1433
+DB_DATABASE=homestead
+DB_USERNAME=sa
+DB_PASSWORD="<YourStrong!Passw0rd>"
+```
 
-We would like to extend our thanks to the following sponsors for helping fund on-going Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](http://patreon.com/taylorotwell):
-
-- **[Vehikl](http://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Pulse Storm](https://www.fragrantica.com)
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+The `DB_PASSWORD` above is the one used in the example docs for running the SQL Server container(so don't get any ideas!).
