@@ -1,4 +1,4 @@
-<?php
+<?php namespace Tests\Explore;
 
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
@@ -10,13 +10,10 @@ class CreateDatabaseTest extends TestCase {
     DB::unprepared('CREATE DATABASE test');
 
     $sql =<<<sql
-DECLARE @dbname nvarchar(128)
-SET @dbname = N'test'
-
 IF (EXISTS (SELECT name
             FROM master.dbo.sysdatabases
-            WHERE ('[' + name + ']' = @dbname
-                   OR name = @dbname)))
+            WHERE ('[' + name + ']' = 'test'
+                   OR name = 'test')))
 
   SELECT out = 'db exists';
 sql;
