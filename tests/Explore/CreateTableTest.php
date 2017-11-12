@@ -9,7 +9,7 @@ class CreateTableTest extends TestCase {
     
     parent::setUp();
     
-    DB::unprepared('CREATE DATABASE library');
+    DB::unprepared('CREATE DATABASE library;');
   }
   
   public function testCreateTable() {
