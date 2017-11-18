@@ -11,10 +11,12 @@ The next step is to run `vagrant up` but you may want to check `Homestead.yaml` 
 
 Now that you've got vagrant running you'll need to install the official Microsoft driver for PHP: https://github.com/Microsoft/msphpsql. If you plan to use PHP 7.1 I added a bash alias to `aliases` that can be run once the machine is booted to install the driver for PHP 7.1. It only works when run as root so you will need to do the following from the project directory:
 
-1. `$ vagrant ssh`
-1. `sudo su`
-1. `souce code/aliases`
-1. `install_sqlserver_php7.1`
+```
+$ vagrant ssh
+$ sudo su
+$ souce code/aliases
+$ install_sqlserver_php7.1
+```
 
 That should get you setup with the driver. If you don't have a SQL Server to connect to I recommend the docker container: https://docs.microsoft.com/en-us/sql/linux/quickstart-install-connect-docker.
 
@@ -34,3 +36,10 @@ The `DB_PASSWORD` above is the one used in the example docs for running the SQL 
 All of the examples are written as unit tests. I like this as a way to present how the SQL commands work because unit tests have a neat way of laying things out.
 
 You get the setup and tear down as well as a way to check that the result of the command is what you expect with the assertions. There's also the added bonus that as the SQL driver gets upgraded failing tests will highlight any changes.
+
+With all of the previous and aforementioned steps completed you can now switch into the vagrant "code" directory and run the tests:
+
+```text
+$ cd /home/vagrant/code
+$ phpunit
+```
