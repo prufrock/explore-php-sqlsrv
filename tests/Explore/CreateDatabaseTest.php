@@ -3,13 +3,15 @@
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
-class CreateDatabaseTest extends TestCase {
+class CreateDatabaseTest extends TestCase
+{
 
-  public function testCreateDatabase() {
+    public function testCreateDatabase()
+    {
 
-    DB::unprepared('CREATE DATABASE test');
+        DB::statement('CREATE DATABASE test');
 
-    $sql =<<<sql
+        $sql = <<<sql
 IF (EXISTS (SELECT name
             FROM master.dbo.sysdatabases
             WHERE ('[' + name + ']' = 'test'
@@ -18,12 +20,13 @@ IF (EXISTS (SELECT name
   SELECT out = 'db exists';
 sql;
 
-    $result = DB::select($sql);
-    $this->assertEquals('db exists', $result[0]->out);
-  }
+        $result = DB::select($sql);
+        $this->assertEquals('db exists', $result[0]->out);
+    }
 
-  public function tearDown() {
+    public function tearDown()
+    {
 
-    DB::unprepared('DROP DATABASE test');
-  }
+        DB::statement('DROP DATABASE test');
+    }
 }

@@ -9,7 +9,7 @@ Once you have Virtual Box you can install Homestead by simply running `composer 
 
 The next step is to run `vagrant up` but you may want to check `Homestead.yaml` to see if you agree with the configuration. Oh, while you're there you should add the hostname to you `/etc/hosts` file mapped to the ip address at the top of the file.
 
-Now that you've got vagrant running you'll need to install the official Microsoft driver for PHP: https://github.com/Microsoft/msphpsql. If you plan to use PHP 7.1 I added an bash alias to `aliases` that can be run once the machine is booted to install the driver for PHP 7.1. It only works when run as root so you will need to do the following from the project directory:
+Now that you've got vagrant running you'll need to install the official Microsoft driver for PHP: https://github.com/Microsoft/msphpsql. If you plan to use PHP 7.1 I added a bash alias to `aliases` that can be run once the machine is booted to install the driver for PHP 7.1. It only works when run as root so you will need to do the following from the project directory:
 
 1. `$ vagrant ssh`
 1. `sudo su`
@@ -30,3 +30,7 @@ DB_PASSWORD="<YourStrong!Passw0rd>"
 ```
 
 The `DB_PASSWORD` above is the one used in the example docs for running the SQL Server container(so don't get any ideas!).
+
+All of the examples are written as unit tests. I like this as a way to present how the SQL commands work because unit tests have a neat way of laying things out.
+
+You get the setup and tear down as well as a way to check that the result of the command is what you expect with the assertions. There's also the added bonus that as the SQL driver gets upgraded failing tests will highlight any changes.
