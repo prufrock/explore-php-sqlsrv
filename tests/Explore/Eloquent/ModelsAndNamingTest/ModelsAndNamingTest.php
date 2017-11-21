@@ -1,4 +1,4 @@
-<?php namespace Tests\Explore\Eloquent;
+<?php namespace Tests\Explore\Eloquent\ModelsAndNamingTest;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Schema;
