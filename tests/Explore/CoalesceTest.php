@@ -9,7 +9,7 @@ use Tests\TestCase;
 class CoalesceTest extends TestCase
 {
 
-    public function testCoalesceTwoValuesWithNullFirst()
+    public function testCoalesceWithNullFirst()
     {
         $sql =<<<SQL
 SELECT COALESCE(NULL, 'Peter') name;
@@ -19,7 +19,7 @@ SQL;
         $this->assertEquals('Peter', $rows[0]->name);
     }
 
-    public function testCoalesceTwoValuesWithValueFirst()
+    public function testCoalesceWithValueFirst()
     {
         $sql =<<<SQL
 SELECT COALESCE('June', NULL) name;
